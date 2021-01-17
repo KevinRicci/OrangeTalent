@@ -2,6 +2,7 @@ package br.com.lottery.betapi.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -9,9 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotBlank;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -25,12 +24,11 @@ import java.util.Date;
 @NoArgsConstructor
 @Data
 @Entity
-@JsonIgnoreProperties(value = "creationDate") //jackson
 public class Bet {
 
-    @ManyToOne
-    @JoinColumn(name = "PERSON_ID", referencedColumnName = "ID")
-    private Person person;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "person_id")
+    private Person person = new Person();
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,6 +39,6 @@ public class Bet {
     @Temporal(TemporalType.TIMESTAMP) //javax
     private Date creationDate;
 
-    @NotBlank //javax
+    @Column(nullable = false)
     private int numbers;
 }

@@ -1,32 +1,29 @@
 package br.com.lottery.betapi.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import br.com.lottery.betapi.model.Bet;
 import br.com.lottery.betapi.model.Person;
-import java.util.List;
+
 
 import javax.validation.Valid;
 
-import br.com.lottery.betapi.repository.PersonRepository;
+import br.com.lottery.betapi.service.PersonServiceImpl;
 
 @RestController
-@RequestMapping("/person")
+@RequestMapping("/people")
 public class PersonController {
     
     @Autowired
-    private PersonRepository personRepository;
+    private PersonServiceImpl personServiceImpl;
 
-    @GetMapping("/all")
-    public List<Person> getAllPeople(){
-        return personRepository.findAll();
-    }
-
-    @PostMapping("/save")
-    public Person createPerson(@Valid @RequestBody Person person){
-        return personRepository.save(person);
+    @PostMapping("/generateBet")
+    public ResponseEntity<Bet> createPersonAndGenerateBet(@Valid @RequestBody Person person){ 
+        return ResponseEntity.ok(personServiceImpl.save(person));
     }
 }

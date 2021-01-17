@@ -14,6 +14,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.validator.constraints.br.CPF;
 
@@ -21,13 +22,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 @AllArgsConstructor //lombok
 @NoArgsConstructor
 @Data
 @Entity
-@JsonIgnoreProperties(value = "creationDate") //jackson
+@JsonIgnoreProperties(value = {"creationDate", "bets"}) //jackson
 public class Person {
 
     @Id
@@ -49,6 +51,7 @@ public class Person {
     @NotBlank   //javax
     private String email;
 
-    @OneToMany(mappedBy = "person", fetch = FetchType.EAGER)
-    private List<Bet> bets;
+    @OneToMany(mappedBy = "person", fetch = FetchType.EAGER, orphanRemoval = true)
+    @Cascade(value = {org.hibernate.annotations.CascadeType.ALL})
+    private List<Bet> bets = new ArrayList<Bet>();
 }
