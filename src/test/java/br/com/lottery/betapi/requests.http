@@ -1,10 +1,53 @@
-GET http://localhost:8080/bets/sdada@gmail.com
+GET http://localhost:8080/bets/talitaMoraes23@gmail.com
 
 POST http://localhost:8080/people/generateBet
 Content-Type: application/json
 
 {
-    "name":"lais",
-    "email": "lais@gmail.com",
-    "cpf": "222"
+    "name":"Talita",
+    "email": "talitaMoraes23@gmail.com"
 }
+
+//Reposta POST
+
+{
+  "email": "talitaMoraes23@gmail.com",
+  "numbers": [
+    248238
+  ]
+}
+
+{
+  "email": "talitaMoraes23@gmail.com",
+  "numbers": [
+    690221
+  ]
+}
+
+//Respota GET
+
+{
+  "email": "talitaMoraes23@gmail.com",
+  "numbers": [
+    248238,
+    690221
+  ]
+}
+
+//Scripts
+
+CREATE TABLE PERSON(
+id INT PRIMARY KEY AUTO_INCREMENT,
+creation_date DATE NOT NULL,
+name VARCHAR(50),
+cpf VARCHAR(14),
+email VARCHAR(50)
+);
+
+CREATE TABLE BET(
+id INT PRIMARY KEY AUTO_INCREMENT,
+creation_date DATE NOT NULL,
+numbers INT NOT NULL,
+person_id INT NOT NULL,
+FOREIGN KEY(person_id) REFERENCES person(id)
+);
