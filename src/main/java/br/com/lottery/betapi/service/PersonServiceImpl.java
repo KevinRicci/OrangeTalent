@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.com.lottery.betapi.dto.BetDto;
 import br.com.lottery.betapi.model.Bet;
 import br.com.lottery.betapi.model.Person;
 import br.com.lottery.betapi.repository.PersonRepository;
@@ -19,13 +20,14 @@ public class PersonServiceImpl implements PersonService {
 
     @Transactional
     @Override
-    public Bet save(Person person) {
+    public BetDto save(Person person) {
+        BetDto betDto = new BetDto();
         if(emailNotExists(person)){
             person = personRepository.save(person);
-            return betServiceImpl.generateBet(person);
+            return betDto.convertToBetDto(betServiceImpl.generateBet(person));
         }else{
             person = personRepository.findByEmail(person.getEmail()).get(0);
-            return betServiceImpl.generateBet(person);
+            return betDto.convertToBetDto(betServiceImpl.generateBet(person));
         }
     } 
 

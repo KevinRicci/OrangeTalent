@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.lottery.betapi.model.Bet;
+import br.com.lottery.betapi.dto.BetDto;
+import br.com.lottery.betapi.exception.ResourceNotFoundException;
 import br.com.lottery.betapi.service.BetServiceImpl;
 
 @RestController
@@ -20,7 +21,12 @@ public class BetController {
     private BetServiceImpl betServiceImpl;
 
     @GetMapping("/{email}")
-    public ResponseEntity<List<Bet>> findByEmailOrderedByCreationDate(@PathVariable("email") String email){
-        return ResponseEntity.ok(betServiceImpl.findByEmailOrderedByCreationDate(email));
+    public ResponseEntity<BetDto> findByEmailOrderedByCreationDate(@PathVariable("email") String email){
+        BetDto result = betServiceImpl.findByEmailOrderedByCreationDate(email);
+        if(result.getEmail().isEmpty()){
+            throw new ResourceNotFoundException("bets", "email", email);
+        }else{
+            return ResponseEntity.ok(result);
+        }
     }
 }

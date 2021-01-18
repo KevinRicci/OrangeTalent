@@ -1,9 +1,10 @@
-GET http://localhost:8080/bets/bola@gmail.com
+GET http://localhost:8080/bets/sdada@gmail.com
 
 POST http://localhost:8080/people/generateBet
 Content-Type: application/json
 
 {
-    "name":"jonas",
-    "email": "bola@gmail.com"
+    "name":"lais",
+    "email": "lais@gmail.com",
+    "cpf": "222"
 }

@@ -6,6 +6,7 @@ import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.lottery.betapi.dto.BetDto;
 import br.com.lottery.betapi.model.Bet;
 import br.com.lottery.betapi.model.Person;
 import br.com.lottery.betapi.repository.BetRepository;
@@ -35,8 +36,9 @@ public class BetServiceImpl implements BetService {
     }
 
     @Override
-    public List<Bet> findByEmailOrderedByCreationDate(String email) {
-        return betRepository.findByEmailOrderedByCreationDate(email);
+    public BetDto findByEmailOrderedByCreationDate(String email) {
+        BetDto betDto = new BetDto();
+        return betDto.convertToBetDto(betRepository.findByEmailOrderedByCreationDate(email));
     }
 
     public Boolean checkRepeatedNumber(int number, Person person){

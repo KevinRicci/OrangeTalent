@@ -6,7 +6,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.HttpClientErrorException.BadRequest;
 
+import br.com.lottery.betapi.dto.BetDto;
 import br.com.lottery.betapi.model.Bet;
 import br.com.lottery.betapi.model.Person;
 
@@ -23,7 +25,7 @@ public class PersonController {
     private PersonServiceImpl personServiceImpl;
 
     @PostMapping("/generateBet")
-    public ResponseEntity<Bet> createPersonAndGenerateBet(@Valid @RequestBody Person person){ 
+    public ResponseEntity<BetDto> createPersonAndGenerateBet(@Valid @RequestBody Person person){
         return ResponseEntity.ok(personServiceImpl.save(person));
     }
 }
